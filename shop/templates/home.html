@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="container px-4 px-lg-5 mt-5">
+
+    {% for category in categories %}
+        <div class="card mb-3">
+            <div class="row">
+              <div class="col-md-4">
+                <img class="card-img" alt="{{ category.name }}" src="{{ category.image.url }}">
+              </div>
+              <div class="col-md-8">
+                <div class="card-body">
+                  <h5 class="card-title">{{ category.name }}</h5>
+                  <p class="card-text" style="min-height: 108px;">{{ category.description }}</p>
+                  <p class="card-text"><small class="text-muted">{{ category.label }} &nbsp;</small></p>
+                  <a href="/category/{{ category.slug }}"><button type="button" class="btn btn-primary btn-sm mr-2  float-right">Все продукты</button></a>
+                </div>
+              </div>
+            </div>
+          </div>
+    {% endfor %}
+
+</div>
+
+
+<div class="container px-4 px-lg-5 mt-5">
+    <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+
+        {% for product in products %}
+        <div class="col mb-5">
+            <div class="card h-100">
+                <!-- Sale badge-->
+                {% if product.sale %}
+                <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem">Sale</div>
+                {% endif %}
+                <a href="/category/{{ product.category.slug }}/product/{{ product.slug }}">
+                    <!-- Product image-->
+                    <img class="img-fluid rounded-3" src="{{ product.image.url }}" alt="{{ product.image.url }}" />
+                </a>
+                <!-- Product details-->
+                <div class="card-body p-4">
+                    <div class="text-center">
+
+
+                        <!-- Product name-->
+                        <a href="/category/{{ product.category.slug }}/product/{{ product.slug }}"><h5 class="fw-bolder">{{ product.name }}</h5></a>
+
+
+                        <!-- Product reviews-->
+                        {% if product.rating != None and product.rating > 0 %}
+                        <div class="d-flex justify-content-center small text-warning mb-2">
+                            <div class="bi-star-fill"></div>
+                            <div class="bi-star{% if product.rating > 1 %}-fill{% endif %}"></div>
+                            <div class="bi-star{% if product.rating > 2 %}-fill{% endif %}"></div>
+                            <div class="bi-star{% if product.rating > 3 %}-fill{% endif %}"></div>
+                            <div class="bi-star{% if product.rating > 4 %}-fill{% endif %}"></div>
+                        </div>
+                        {% endif %}
+
+
+                        <!-- Product price-->
+                        {% if product.old_price > 0 %}<span class="text-muted text-decoration-line-through">{{ product.old_price }} руб.</span>{% endif %}
+                        {{ product.price }} руб.
+
+
+                    </div>
+                </div>
+                <!-- Product actions-->
+                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                    <div class="text-center"><a class="btn btn-outline-dark mt-auto action-add-to-cart" data-id="{{ product.id }}" href="javascript:void(0)">В корзину</a></div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+
+{% endblock content %}

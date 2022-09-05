@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+<div class="container py-4 my-4 mx-auto d-flex flex-column">
+        <div class="header">
+            <div class="row r1">
+                <div class="col-md-7 abc">
+                    <h1>{{ product.name }}</h1>
+                </div>
+                <div class="col-md-4 text-right pqr pl-5">
+                        <!-- Product reviews-->
+                        {% if product.rating != None and product.rating > 0 %}
+                        <h5 style="text-align: center;">Рейтинг</h5>
+                        <div class="d-flex justify-content-center small text-warning mb-2">
+                            <div class="bi-star-fill"></div>
+                            <div class="bi-star{% if product.rating > 1 %}-fill{% endif %}"></div>
+                            <div class="bi-star{% if product.rating > 2 %}-fill{% endif %}"></div>
+                            <div class="bi-star{% if product.rating > 3 %}-fill{% endif %}"></div>
+                            <div class="bi-star{% if product.rating > 4 %}-fill{% endif %}"></div>
+                        </div>
+                        {% endif %}
+                </div>
+                <p class="text-right para">{{ product.label }}</p>
+            </div>
+        </div>
+        <div class="container-body mt-4">
+            <div class="row r3">
+                <h4 class="col-md-7 p-0 klo">
+                    {{ product.description }}
+                        <p class="mt-5">
+                                {% if product.old_price > 0 %}<span class="text-muted text-decoration-line-through">{{ product.old_price }} руб.</span>{% endif %}
+                                {{ product.price }} руб.
+                        </p>
+                    <div class="card-footer p-4 pt-0 border-top-0 bg-transparent mt-5">
+                        <div class="text-center"><a class="btn btn-outline-dark mt-auto action-add-to-cart" data-id="{{ product.id }}" href="javascript:void(0)">В корзину</a></div>
+                </div>
+                </h4>
+                <div class="col-md-5"> <img src="{{ product.image.url }}" width="90%" height="95%"> </div>
+            </div>
+        </div>
+        
+    </div>
+
+{% endblock content %}
